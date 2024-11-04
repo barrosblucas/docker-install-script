@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Habilita a exibição de comandos
-set -x
+#set -x
 
 # Códigos de cor
 GREEN='\033[0;32m'
@@ -52,15 +52,17 @@ sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plug
 echo -e "${GREEN}Adicionando usuário ao grupo docker...${NC}"
 sudo usermod -a -G docker $USER
 
-# Carrega as novas permissões do grupo
-echo -e "${GREEN}Recarregando as permissões do grupo...${NC}"
-newgrp docker << END
-# Testa a instalação do Docker
+# Testa a instalação do Docker com sudo
 echo -e "${GREEN}Testando a instalação do Docker...${NC}"
-docker run hello-world
-END
+sudo docker run hello-world || echo -e "${GREEN}Caso encontre problemas, relogue e tente novamente.${NC}"
+
+echo -e "${GREEN}Instalação do Docker e Docker Compose concluída com sucesso!${NC}"
+
+# Instrução para relogar
+echo -e "${GREEN}Para aplicar as mudanças no grupo docker você precisa relogar da sua sessão.${NC}"
+
 
 # Desabilita a exibição de comandos
-set +x
+#set +x
 
 echo -e "${GREEN}Instalação do Docker concluída com sucesso!${NC}"
